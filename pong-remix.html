@@ -1,0 +1,106 @@
+<html>
+
+<head>
+    <title>Pong</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        // global variables, able to be used in all functions
+        var ballX; // x-location of the ball
+        var ballY; // y-location of the ball
+        var ballSpeedX = 5; // speed of the ball horizontally
+        var ballSpeedY = 5; // speed of the ball vertically
+        var paddleHeight = 30; // height of the paddle
+        var score = 0; //score when ball hits paddle
+        function setup() {
+            createCanvas(800, 600); // canvas size
+            noCursor(); // hides the mouse
+            ballX = width / 2; // start the ball in the
+            ballY = height / 2; // middle of the canvas
+
+        }
+
+        function draw() {
+            background(128); // resets the background
+            moveBall(); // ball moves in X and Y direction
+            checkCollide(); // checks for collision with walls or paddle
+            drawPaddle(); // re-draws paddle
+            drawBall(); // re-draws ball 
+        }
+
+
+
+
+
+        function moveBall() {
+            ballX = ballX + ballSpeedX; // updates ball location horizontally
+            ballY = ballY + ballSpeedY; // updates ball location vertically
+
+            // monitor speed/direction of ball
+            console.log("ballSpeedX: " + ballSpeedX + ", ballSpeedY: " + ballSpeedY);
+        }
+
+        function checkCollide() {
+            // left/right edges
+            if (ballX < 0 || ballX > width) {
+                ballSpeedX = ballSpeedX * -1; // switch X direction
+            }
+
+            // top edge
+            if (ballY < 0) {
+                ballSpeedY = ballSpeedY * -1; // switch Y direction
+            }
+
+            // paddle
+            if (ballY > height - paddleHeight) { // ball is past 'goal line' vertically
+                if (ballX > mouseX && ballX < mouseX + 200) { // ball is within paddle horizontally
+                    ballSpeedY = ballSpeedY * -1; // switch Y direction
+                }
+                else { // ball is on the left or right side of the paddle
+                    text("GAME OVER!", width / 2, height / 2);
+                    noLoop(); // stop the draw loop
+                }
+
+            }
+
+        }
+
+
+        function drawBall() {
+            noStroke(); // no outline
+            ellipse(ballX, ballY, 20, 20); // draw a small ball at the current (x,y) location
+        }
+
+        function drawPaddle() {
+            strokeWeight(4); // border thickness of 4px
+
+            // rectangle y-value is always at the bottom, but shifted up the height of paddle and the border of paddle
+            rect(mouseX, height - paddleHeight - 4, 200, paddleHeight);
+
+        }
+
+        function keyPressed() {
+
+            if (keyCode = ENTER) { //when enter key is pressed
+                ballSpeedX = 0; //stop speed of the ball, has intial value of 0, stops moving
+                ballSpeedY = 0;
+                ballY = height / 2;//ball is placed in the middle of the screen not moving
+                ballX = width / 2;
+            }
+            
+            //this function was supposed to resume the game whe  the game is paused but it doesnt work
+        function mouseClicked(){ //when mouse is pressed
+                ballSpeedX =5; //speed of the balll is moving with an intial value of 5
+                ballSpeedY =5;
+                ballX = width / 2; //ball is placed in the middle of the screen
+                ballY = height / 2;
+        }
+        }
+         
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
